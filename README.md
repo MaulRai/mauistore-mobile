@@ -59,13 +59,12 @@ Alasannya adalah a ini akan di declare ulang dengan objek lain. Jadi perbedaan `
 ---
 
 ## 🛠 **Implementasi Checklist (Step-by-Step)**
+
 1. **Membuat projek baru lewat Android Studio dan menginisiasi github**:  
-  Untuk membuat projek Flutter, saya membuatnya di Android Studio dengan menu New Flutter Project. Saya menamainya `mauistore_mobile`. Lalu, saya menginisiasi direktori github untuk di push.
+   Untuk membuat projek Flutter, saya membuatnya di Android Studio dengan menu New Flutter Project. Saya menamainya `mauistore_mobile`. Lalu, saya menginisiasi direktori github untuk di push.
 
 2. **Membuat button**:
-
-
-  Untuk membuat button saya memakai Elevated Button. Untuk tulisannya bisa diatur pada parameter child nya dengan Widget Text('suatu text'). Sedangkan untuk warna bisa diatur lewat parameter style dengan WidgetStatePropertyAll<Color>(color). Lalu karena diminta untuk menunjukkan snackbar sesuai text nya, maka kita set parameter onPressed-nya juga dengan memanggil
+   Untuk membuat button saya memakai Elevated Button. Untuk tulisannya bisa diatur pada parameter child nya dengan Widget Text('suatu text'). Sedangkan untuk warna bisa diatur lewat parameter style dengan WidgetStatePropertyAll<Color>(color). Lalu karena diminta untuk menunjukkan snackbar sesuai text nya, maka kita set parameter onPressed-nya juga dengan memanggil
 
   ```
   () {
@@ -78,10 +77,8 @@ Alasannya adalah a ini akan di declare ulang dengan objek lain. Jadi perbedaan `
   dimana, ini adalah void function karena berbentuk (){} dan tidak return sesuatu.
 
 3. **Membuat custom class untuk button**:
+   Karena button-button yang ingin diimplementasi pada tugas kali ini memiliki pola, yaitu teks dan warna, maka lebih baik kita menggunakan class yang memiliki parameter yang dapat diubah-ubah. Kita memiliki 2 opsi, memakai method yang return suatu widget, atau langsung menggunakan Stateless Widget. Disini akan lebih bagus jika kita menggunakan Stateless Widget karena kita akan menampilkan Snackbar dimana message yang akan ditampilkan ini memerlukan `context`. Pada method build Stateless widget kita sudah di provide `context` tiadk seperti method. 
 
-
-  Karena button-button yang ingin diimplementasi pada tugas kali ini memiliki pola, yaitu teks dan warna, maka lebih baik kita menggunakan class yang memiliki parameter yang dapat diubah-ubah. Kita memiliki 2 opsi, memakai method yang return suatu widget, atau langsung menggunakan Stateless Widget. Disini akan lebih bagus jika kita menggunakan Stateless Widget karena kita akan menampilkan Snackbar dimana message yang akan ditampilkan ini memerlukan `context`. Pada method build Stateless widget kita sudah di provide `context` tiadk seperti method. 
-
-  Saya membuat custom class bernama `SnackBarButton` yang constructornya menerima String text dan Color color, agar bisa disesuaikan. Lalu saya cukup memanggil constructor ini pada home. Untuk penataan di home nya sendiri saya memasukkan button-button ini pada suatu Column, agar tertata secara vertikal
+   Saya membuat custom class bernama `SnackBarButton` yang constructornya menerima String text dan Color color, agar bisa disesuaikan. Lalu saya cukup memanggil constructor ini pada home. Untuk penataan di home nya sendiri saya memasukkan button-button ini pada suatu Column, agar tertata secara vertikal
 
   
