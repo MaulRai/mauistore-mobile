@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mauistore_mobile/widgets/buttons.dart';
+import 'package:mauistore_mobile/widgets/left_drawer.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -8,11 +9,10 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        actions: [
-          SafeArea(child: Text("Haloddd")),
-        ],
+        // iconTheme: const IconThemeData(color: Colors.white),
+        // backgroundColor: Colors.blue,
       ),
+      drawer: const LeftDrawer(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

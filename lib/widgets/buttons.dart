@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mauistore_mobile/screens/product_screen.dart';
 
 class SnackBarButton extends StatelessWidget {
   final String text;
@@ -21,6 +22,17 @@ class SnackBarButton extends StatelessWidget {
             ..hideCurrentSnackBar()
             ..showSnackBar(
                 SnackBar(content: Text("Kamu telah menekan tombol $text!")));
+          if (text == 'Lihat Daftar Produk') {
+            
+          } else if (text == 'Tambah Produk') {
+            Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProductScreen(),
+                  ));
+          } else if (text == 'Logout') {
+            
+          } 
         },
         style: ButtonStyle(
           backgroundColor: WidgetStatePropertyAll<Color>(color),

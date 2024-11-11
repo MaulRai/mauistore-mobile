@@ -81,4 +81,123 @@ Alasannya adalah a ini akan di declare ulang dengan objek lain. Jadi perbedaan `
 
    Saya membuat custom class bernama `SnackBarButton` yang constructornya menerima String text dan Color color, agar bisa disesuaikan. Lalu saya cukup memanggil constructor ini pada home. Untuk penataan di home nya sendiri saya memasukkan button-button ini pada suatu Column, agar tertata secara vertikal
 
-  
+---
+
+# 📋 **Pertanyaan Tugas 2**
+
+## 🛠 **Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan const pada kode Flutter. Kapan sebaiknya kita menggunakan const, dan kapan sebaiknya tidak digunakan?**
+   Kegunaan const adalah untuk keperluan kecepatan. Keuntungannya jika kita memakai modifier ini, maka variabel akan di dekalarasikan compile-time, jadi lebih cepat. Program tidak perlu mengecek nilai dan state nya saat running. Sebaiknya kita menggunakan modifier ini saat kita tahu objek ini tidak akan berubah selama program berjalan. Kita juga harus memastikan variabel-variabel lainnya yang menjadi atribut objek ini konstan. Sebaliknya jika ada objek yang atributnya masih mutable, maka akan terjadi compile error. Biasanya VSCode akan memberi warning
+
+## 🛠 **Jelaskan dan bandingkan penggunaan Column dan Row pada Flutter. Berikan contoh implementasi dari masing-masing layout widget ini!**
+   Column adalah widget container untuk display item itemnya secara memanjang vertikal, sementara Row adalah widget container untuk display item itemnya secara memanjang horizontal. Contoh implementasi:
+
+
+  Penataan teks secara vertikal kebawah
+   ```
+   Row(
+    children: [
+      Text('Teks 1'),
+      Text('Teks 2'),
+      Text('Teks 3'),
+    ]
+   );
+   ```
+
+
+  Penataan teks secara horizontal menyamping ke kanan
+   ```
+   Column(
+    children: [
+      Text('Teks 1'),
+      Text('Teks 2'),
+      Text('Teks 3'),
+    ]
+   );
+   ```
+
+
+## 🛠 **Sebutkan apa saja elemen input yang kamu gunakan pada halaman form yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan!**
+   - Checkbox:    
+     Karena pada form produk saya tidak ada konsepnya pilihan, isian semua
+   - Radio:
+     Karena pada form produk saya tidak ada konsepnya pilihan, isian semua
+   - Switch :
+     Karena pada form produk saya tidak ada konsepnya toggle, isian semua
+
+
+## 🛠 **Bagaimana cara kamu mengatur tema (theme) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat?**
+   Saya mengatur tema lewat parameter theme pada MaterialApp di main.dart. Disitu saya me-set ThemeData dengan ColorScheme, appBarTheme, dan beberapa theme dari beberapa widget lainnya. Saya menggunakan warna teal sebagai warna primer. Karena tema ini saya tidak perlu set manual warna-warna pada widget-widget yang akan saya implementasikan.
+
+
+## 🛠 **Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?**
+1. **Membuat minimal satu halaman baru pada aplikasi, yaitu halaman formulir tambah item baru**  
+   Sebelum membuat filenya, saya terlebih dahulu mengorganisir folder. Saya membuat folder screen dan widgets. Lalu untuk membuat form, saya menggunakan widget Form dan di provide form key nya dan dilengkapi beberapa TextField yang juga ada keynya. Lalu fieldnya didekorasi oleh hint teks dan label masing-masing dengan name, deskrisi, harga dan jumlah. Untuk handling masing masing ada function yang menerima parameter string dan akan mengubah variabel yang corresponding dengan labelnya (di dalam setstate agar responsif). Agar aman, saya menambahkan validasi sesuai keperluan data type nya. Terakhir implementasi tombol save, yang akan membaca variabel-variabel yang diubah pada form dan di display lewat showDialog.
+2. **Mengarahkan pengguna ke halaman form tambah item baru ketika menekan tombol Tambah Item pada halaman utama.**  
+   Saya mengimplementasi logic ini pada custom class button sebelumnya, dimana ada kondisional berdasarakan argumen text yang di pass, lalu di handle menggunakan 
+
+
+   ```
+   Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const ScreenTujuan(),
+    ));
+   ```
+
+
+3. **Memunculkan data sesuai isi dari formulir yang diisi dalam sebuah pop-up setelah menekan tombol Save pada halaman formulir tambah item baru.**  
+   Lalu dari variabel-variabel yang sudah divalidasi dari form, tombol submit akan memunculkan dialog. Saya mengimplementasi ini dengan me set parameter berikut ini pada tombol:
+
+   ```
+   onPressed: () {
+    if (_formKey.currentState!.validate()) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Mood berhasil tersimpan'),
+            content: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Nama: $_name'),
+                  Text('Deskripsi: $_desc'),
+                  Text('Harga: $_price'),
+                  Text('Amount: $_amount'),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.pop(context);
+                  _formKey.currentState!.reset();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  },
+   ```
+
+   
+4. **Membuat sebuah drawer pada aplikasi dengan ketentuan sebagai berikut:**  
+   Drawer saya buat dengan builder StatelessWidget yang akan return sebuah drawer beirisi ListTile yang berfungsi untuk tombol navigasi. ListTile ini diberi handler function pada parameter nya untuk routing:
+
+   ```
+   ListTile(
+      leading: const Icon(Icons.home_outlined),
+      title: const Text('Halaman Utama'),
+      // Bagian redirection ke MyHomePage
+      onTap: () {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MyHomePage(),
+            ));
+      },
+    ),
+   ```
