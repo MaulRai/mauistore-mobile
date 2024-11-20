@@ -149,38 +149,38 @@ Alasannya adalah a ini akan di declare ulang dengan objek lain. Jadi perbedaan `
    Lalu dari variabel-variabel yang sudah divalidasi dari form, tombol submit akan memunculkan dialog. Saya mengimplementasi ini dengan me set parameter berikut ini pada tombol:
 
    ```
-   onPressed: () {
-    if (_formKey.currentState!.validate()) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Mood berhasil tersimpan'),
-            content: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Nama: $_name'),
-                  Text('Deskripsi: $_desc'),
-                  Text('Harga: $_price'),
-                  Text('Amount: $_amount'),
-                ],
+    onPressed: () {
+      if (_formKey.currentState!.validate()) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Mood berhasil tersimpan'),
+              content: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Nama: $_name'),
+                    Text('Deskripsi: $_desc'),
+                    Text('Harga: $_price'),
+                    Text('Amount: $_amount'),
+                  ],
+                ),
               ),
-            ),
-            actions: [
-              TextButton(
-                child: const Text('OK'),
-                onPressed: () {
-                  Navigator.pop(context);
-                  _formKey.currentState!.reset();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
-  },
+              actions: [
+                TextButton(
+                  child: const Text('OK'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    _formKey.currentState!.reset();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+    },
    ```
 
    
@@ -188,18 +188,18 @@ Alasannya adalah a ini akan di declare ulang dengan objek lain. Jadi perbedaan `
    Drawer saya buat dengan builder StatelessWidget yang akan return sebuah drawer beirisi ListTile yang berfungsi untuk tombol navigasi. ListTile ini diberi handler function pada parameter nya untuk routing:
 
    ```
-   ListTile(
-      leading: const Icon(Icons.home_outlined),
-      title: const Text('Halaman Utama'),
-      // Bagian redirection ke MyHomePage
-      onTap: () {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MyHomePage(),
-            ));
-      },
-    ),
+    ListTile(
+        leading: const Icon(Icons.home_outlined),
+        title: const Text('Halaman Utama'),
+        // Bagian redirection ke MyHomePage
+        onTap: () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MyHomePage(),
+              ));
+        },
+      ),
    ```
 
 # 📋 **Pertanyaan Tugas 3**
@@ -272,11 +272,11 @@ src: https://docs.djangoproject.com/en/5.1/ref/request-response/
   - Lalu di project Flutter, dibuat sebuah form dengan TextField nya untuk inputdan ada handler button nya contoh:
 
   ```
-  final response = await request
-      .login("http://127.0.0.1:8000/auth/login/", {
-    'username': username,
-    'password': password,
-  });
+    final response = await request
+        .login("http://127.0.0.1:8000/auth/login/", {
+      'username': username,
+      'password': password,
+    });
   ```
  
   - Dari sini, Flutter akan melakukan request login lalu di handle olehnya sesuai function yang dipanggil lewat routing url
@@ -288,35 +288,35 @@ src: https://docs.djangoproject.com/en/5.1/ref/request-response/
   - Untuk membuat model kustom sesuai dengan proyek aplikasi Django, saya membuat Product dengan atribut name, desc, rating, stock, dan lain lain.
   - Untuk halaman yang berisi daftar semua item saya menampilkan produk secara foreach dengan 
 
-```
-  ListView.builder(
-    itemCount: snapshot.data!.length,
-    itemBuilder: (_, index) {
-      final product = snapshot.data![index];
-      return Container(
-```
+  ```
+    ListView.builder(
+      itemCount: snapshot.data!.length,
+      itemBuilder: (_, index) {
+        final product = snapshot.data![index];
+        return Container(
+  ```
 
   Lalu untuk handle melihat detailnya saya memakai GestureDetector:
 
-```
-  GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                ProductDetailPage(product: product),
-          ),
-        );
-      },
-      child: Container(
-```
+  ```
+      GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    ProductDetailPage(product: product),
+              ),
+            );
+          },
+          child: Container(
+  ```
 
   - Untuk melakukan filter pada halaman daftar item dengan hanya menampilkan item yang terasosiasi dengan pengguna yang login. 
-```
-  class Fields {
-    int user;
-```
+  ```
+    class Fields {
+      int user;
+  ```
    untuk handle kepunyaan produk untuk suatu produk ke user
 
 ---
