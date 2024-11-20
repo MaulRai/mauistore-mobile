@@ -201,3 +201,122 @@ Alasannya adalah a ini akan di declare ulang dengan objek lain. Jadi perbedaan `
       },
     ),
    ```
+
+# 📋 **Pertanyaan Tugas 3**
+
+## 🛠 **Jelaskan mengapa kita perlu membuat model untuk melakukan pengambilan ataupun pengiriman data JSON? Apakah akan terjadi error jika kita tidak membuat model terlebih dahulu?**    
+  Alasan Membuat Model:
+  -  Model digunakan untuk merepresentasikan struktur data JSON yang diterima atau dikirimkan ke server secara lebih terorganisir dan terstruktur.
+  -  Dengan model, kita dapat mengubah, membaca, dan memproses data dengan lebih mudah menggunakan atribut yang sesuai.
+  -  Model memastikan bahwa data yang kita proses sesuai dengan skema yang diharapkan. Hal ini mengurangi risiko error karena ketidaksesuaian format data.
+  -  Dengan model, kode menjadi lebih rapi dan terorganisir sehingga lebih mudah untuk dikelola dan diubah.
+Apakah Akan Terjadi Error Jika Tidak Membuat Model?
+
+  Tidak selalu terjadi error, tetapi tanpa model, kita harus bekerja langsung dengan struktur data mentah (seperti Map atau List), yang lebih rentan terhadap kesalahan karena tipe data yang tidak sesuai. Bekerja langsung dengan data mentah membuat kode menjadi kurang readable dan sulit untuk dipelihara, terutama untuk data yang kompleks. Jika terjadi error, debugging akan lebih sulit karena data tidak terstruktur dengan jelas.
+
+
+src : https://stackoverflow.com/questions/74392484/flutter-is-it-necessary-to-use-model-class-in-flutter
+
+
+---
+
+## 🛠 **Jelaskan fungsi dari library http yang sudah kamu implementasikan pada tugas ini**    
+  Fungsinya adalah untuk mengirimkan data ke server menggunakan metode seperti POST atau PUT, mengambil data dari server menggunakan metode seperti GET. Fungsi dari library ini bekerja secara asinkron (dengan Future), sehingga tidak memblokir thread utama aplikasi.
+
+
+src: https://docs.djangoproject.com/en/5.1/ref/request-response/
+
+---
+
+## 🛠 **Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.**    
+  Fungsi CookieRequest:
+  -  CookieRequest adalah library yang membantu Flutter dalam mengelola cookie secara otomatis selama melakukan komunikasi dengan server.
+  -  CookieRequest menyimpan status login atau informasi user, sehingga data ini dapat digunakan kembali tanpa perlu login ulang.
+  -  Library ini mengurangi kebutuhan untuk mengatur header atau menyisipkan cookie secara manual dalam setiap permintaan HTTP.
+
+  CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter karena semua komponen aplikasi membutuhkan informasi login atau sesi yang sama. Dengan berbagi instance, kita memastikan setiap bagian aplikasi bekerja dengan data sesi yang sama. Selain itu, kita tidak perlu membuat ulang instance CookieRequest di setiap komponen, mengurangi overhead pada aplikasi.
+  
+---
+
+## 🛠 **Jelaskan mekanisme pengiriman data mulai dari input hingga dapat ditampilkan pada Flutter.**    
+  1. Input Data di Flutter:
+  User mengisi data melalui form atau input field di aplikasi Flutter.
+  Data yang diisi dikumpulkan dalam bentuk objek atau JSON.
+
+  2. Pengiriman Data ke Server:
+  Flutter mengirimkan data ke server menggunakan metode HTTP seperti POST melalui library http atau CookieRequest.
+  Data dikirimkan dalam bentuk JSON ke endpoint API di server Django.
+
+  3. Pemrosesan Data di Server:
+  Server Django menerima data dari Flutter.
+  Data tersebut diproses (misalnya, disimpan di database atau digunakan untuk operasi lainnya).
+
+  4. Mengambil Data dari Server:
+  Server menyediakan data dalam format JSON melalui API (biasanya dengan metode GET).
+  Aplikasi Flutter melakukan permintaan HTTP ke endpoint API ini untuk mengambil data.
+
+  5. Mengubah JSON ke Model:
+  Data JSON yang diterima diubah menjadi objek model di Flutter menggunakan metode seperti fromJson().
+  
+  6. Menampilkan Data di Flutter:
+  Data model digunakan untuk membuat UI, seperti menampilkan daftar produk atau detail produk.
+  Aplikasi menggunakan widget seperti ListView, Text, atau Card untuk menampilkan data kepada user.
+
+  src: https://medium.com/@ashishpimpre/how-to-fetch-data-from-an-api-and-display-it-in-listview-in-flutter-770863f85959
+
+---
+
+## 🛠 **Jelaskan mekanisme autentikasi dari login, register, hingga logout. Mulai dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.** 
+  - Buat handler function-function nya. login menerima username dan password lalu return JsonResponse, register menerima username dan password 1 dan 2, lalu menyimpan user dan return JsonResponse. Logout akan memanggil aut_logout(user).
+  - Tambahkan ke url agar bisa diakses
+  - Lalu di project Flutter, dibuat sebuah form dengan TextField nya untuk inputdan ada handler button nya contoh:
+
+  ```
+  final response = await request
+      .login("http://127.0.0.1:8000/auth/login/", {
+    'username': username,
+    'password': password,
+  });
+  ```
+ 
+  - Dari sini, Flutter akan melakukan request login lalu di handle olehnya sesuai function yang dipanggil lewat routing url
+
+--- 
+
+## 🛠 **Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).** 
+  - Mengikuti Tutorial lalu, saya mengimplementasikan handler function login, register, dan logout, menambah routingnya dan mengimplementasikannya ke Flutter dengan sebuah form untuk register dan login. Lalu di handle dengan snippet code diatas contohnya untuk mengintegrasikan sistem autentikasi Django dengan proyek tugas Flutter.
+  - Untuk membuat model kustom sesuai dengan proyek aplikasi Django, saya membuat Product dengan atribut name, desc, rating, stock, dan lain lain.
+  - Untuk halaman yang berisi daftar semua item saya menampilkan produk secara foreach dengan 
+
+```
+  ListView.builder(
+    itemCount: snapshot.data!.length,
+    itemBuilder: (_, index) {
+      final product = snapshot.data![index];
+      return Container(
+```
+
+  Lalu untuk handle melihat detailnya saya memakai GestureDetector:
+
+```
+  GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ProductDetailPage(product: product),
+          ),
+        );
+      },
+      child: Container(
+```
+
+  - Untuk melakukan filter pada halaman daftar item dengan hanya menampilkan item yang terasosiasi dengan pengguna yang login. 
+```
+  class Fields {
+    int user;
+```
+   untuk handle kepunyaan produk untuk suatu produk ke user
+
+---

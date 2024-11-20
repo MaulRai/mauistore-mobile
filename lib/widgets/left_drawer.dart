@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mauistore_mobile/screens/home.dart';
-import 'package:mauistore_mobile/screens/product_screen.dart';
+import 'package:mauistore_mobile/screens/product_form.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -55,7 +55,7 @@ class LeftDrawer extends StatelessWidget {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ProductScreen(),
+                    builder: (context) => const ProductForm(),
                   ));
             },
           ),
